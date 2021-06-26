@@ -24,7 +24,10 @@ int main(int argc, const char** argv) {
 
     std::cout << "IMG_Init it worked!" << std:: endl;
 
+
     RenderWindow window("GAME v1.0", 1280, 720);
+
+    SDL_Texture* grassTexture = window.loadTexture("res/gfx/ground_grass_1.png");
 
     bool gameRunning = true;
     SDL_Event event;
@@ -39,15 +42,17 @@ int main(int argc, const char** argv) {
                 
                 std::cout << "Quit..." << std::endl;
             }
+
+            window.clear();
+            window.render(grassTexture);
+            window.display();
+
         }
         
     }
-    
 
     window.cleanUp();
     SDL_Quit();
-
-
 
     return 0;
 }
