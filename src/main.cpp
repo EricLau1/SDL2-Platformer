@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "RenderWindow.hpp"
+#include "Entity.hpp"
 
 int main(int argc, const char** argv) {
 
@@ -29,7 +30,10 @@ int main(int argc, const char** argv) {
 
     SDL_Texture* grassTexture = window.loadTexture("res/gfx/ground_grass_1.png");
 
+    Entity platform0(100, 50, grassTexture);
+
     bool gameRunning = true;
+
     SDL_Event event;
 
     while (gameRunning)
@@ -44,7 +48,7 @@ int main(int argc, const char** argv) {
             }
 
             window.clear();
-            window.render(grassTexture);
+            window.render(platform0);
             window.display();
 
         }
