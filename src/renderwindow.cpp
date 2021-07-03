@@ -20,7 +20,7 @@ RenderWindow::RenderWindow(const char* title, int width, int height):
 
     std::cout << "SDL_CreateWindow it worked!" << std::endl;
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if ( renderer == NULL )
     {
@@ -45,6 +45,17 @@ SDL_Texture* RenderWindow::loadTexture(const char* p_filepath)
     return texture;
 }
 
+int RenderWindow::getRefreshRate() 
+{
+    int displayIndex = SDL_GetWindowDisplayIndex( window );
+    
+    SDL_DisplayMode mode;
+
+    SDL_GetDisplayMode(displayIndex, 0, &mode);
+
+    return mode.refresh_rate;
+}
+
 void RenderWindow::cleanUp()
 {
     SDL_DestroyWindow(window);
@@ -65,8 +76,8 @@ void RenderWindow::render(Entity& p_entity)
     src.h = p_entity.getCurrentFrame().h;
 
     SDL_Rect dst;
-    dst.x = p_entity.getX() * 4;
-    dst.y = p_entity.getY() * 4;
+    dst.x = p_entity.getPos().x * 4;
+    dst.y = p_entity.getPos().y * 4;
     dst.w = p_entity.getCurrentFrame().w * 4;
     dst.h = p_entity.getCurrentFrame().h * 4;
 
